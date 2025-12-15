@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowDown, ChevronRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export const Hero = () => {
@@ -27,7 +27,7 @@ export const Hero = () => {
   };
 
   return (
-    <section className="min-h-screen flex flex-col justify-center section-padding pt-32 relative overflow-hidden">
+    <section className="flex flex-col justify-center px-6 md:px-12 lg:px-16 pt-20 md:pt-24 pb-6 md:pb-8 relative overflow-hidden">
       {/* Animated background gradient */}
       <div className="absolute inset-0 -z-10">
         <div 
@@ -38,47 +38,25 @@ export const Hero = () => {
         />
       </div>
 
-      <div className="container-max">
-        <div className="max-w-5xl space-y-8">
-          <div 
-            className="flex flex-col items-start gap-4"
+      <div className="w-full max-w-4xl mx-auto">
+        <div className="space-y-4 md:space-y-5">
+          <p 
+            className="text-muted-foreground text-lg md:text-xl font-medium"
             style={{
               opacity: isVisible ? 1 : 0,
-              transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
+              transform: isVisible ? 'translateX(0)' : 'translateX(-20px)',
               transition: 'all 0.8s ease-out 0.2s',
             }}
           >
-            <div
-              className="relative"
-              style={{
-                transform: `translate(${mousePosition.x * 0.1}px, ${mousePosition.y * 0.1}px) rotate(${mousePosition.x * 0.05}deg)`,
-                transition: 'transform 0.3s ease-out',
-              }}
-            >
-              <img 
-                src="/ryan-logo.png" 
-                alt="Ryan Harrison Logo" 
-                className="w-[150px] h-[150px] drop-shadow-lg border-0"
-              />
-            </div>
-            <p 
-              className="text-muted-foreground text-2xl md:text-3xl font-medium"
-              style={{
-                opacity: isVisible ? 1 : 0,
-                transform: isVisible ? 'translateX(0)' : 'translateX(-20px)',
-                transition: 'all 0.8s ease-out 0.4s',
-              }}
-            >
-              Ryan Harrison
-            </p>
-          </div>
+            Ryan Harrison
+          </p>
           
           <h1 
-            className="text-5xl md:text-7xl lg:text-[5.5rem] leading-[1.1] tracking-tight"
+            className="text-3xl md:text-4xl lg:text-5xl leading-[1.1] tracking-tight"
             style={{
               opacity: isVisible ? 1 : 0,
               transform: isVisible ? 'translateY(0) scale(1)' : 'translateY(40px) scale(0.95)',
-              transition: 'all 1s ease-out 0.6s',
+              transition: 'all 1s ease-out 0.4s',
             }}
           >
             Clarity, <span 
@@ -93,36 +71,36 @@ export const Hero = () => {
                 className="absolute -bottom-2 left-0 right-0 h-0.5 bg-accent origin-left"
                 style={{
                   transform: isVisible ? 'scaleX(1)' : 'scaleX(0)',
-                  transition: 'transform 1.2s ease-out 1.2s',
+                  transition: 'transform 1.2s ease-out 1s',
                 }}
               />
             </span>
           </h1>
           
           <div 
-            className="max-w-2xl space-y-6"
+            className="space-y-3"
             style={{
               opacity: isVisible ? 1 : 0,
               transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
-              transition: 'all 0.8s ease-out 1s',
+              transition: 'all 0.8s ease-out 0.8s',
             }}
           >
-            <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed font-light italic">
+            <p className="text-base md:text-lg text-muted-foreground leading-relaxed font-light italic">
               "Building tools for thinking at scale."
             </p>
             
             {/* Functional CTA Section */}
             <div 
-              className="flex flex-col sm:flex-row items-start sm:items-center gap-4 pt-4"
+              className="flex flex-col sm:flex-row items-start sm:items-center gap-3"
               style={{
                 opacity: isVisible ? 1 : 0,
                 transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
-                transition: 'all 0.8s ease-out 1.2s',
+                transition: 'all 0.8s ease-out 1s',
               }}
             >
               <button
                 onClick={scrollToProjects}
-                className="group relative flex items-center gap-2 px-6 py-3 bg-foreground text-background font-medium text-sm uppercase tracking-wider hover:bg-accent transition-all duration-300 overflow-hidden"
+                className="group relative flex items-center gap-2 px-5 py-2.5 bg-foreground text-background font-medium text-sm uppercase tracking-wider hover:bg-accent transition-all duration-300 overflow-hidden"
                 aria-label="View my work"
               >
                 <span className="relative z-10">View Work</span>
@@ -147,16 +125,6 @@ export const Hero = () => {
           </div>
         </div>
       </div>
-
-      {/* Scroll Indicator */}
-      <button
-        onClick={scrollToProjects}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group"
-        aria-label="Scroll to projects"
-      >
-        <span className="text-xs font-medium uppercase tracking-wider">Explore</span>
-        <ArrowDown className="w-5 h-5 animate-bounce group-hover:text-accent" />
-      </button>
     </section>
   );
 };

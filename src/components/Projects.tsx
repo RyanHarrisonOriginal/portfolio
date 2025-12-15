@@ -44,19 +44,22 @@ const posts = [
 
 export const Projects = () => {
   return (
-    <section id="projects" className="section-padding">
+    <section id="projects" className="px-6 md:px-12 lg:px-16 py-8 md:py-16 lg:py-24">
       <div className="container-max">
         {/* Section Header */}
         <div className="flex items-center gap-4 mb-16">
           <ArrowRight className="w-6 h-6" />
-          <h2 className="text-4xl md:text-5xl font-display">WORK</h2>
+          <h2 className="text-4xl md:text-5xl font-display">
+            WORK
+          </h2>
         </div>
 
 
         {/* Featured Project */}
         <div className="mb-24">
-          <p className="text-sm font-medium text-muted-foreground uppercase tracking-widest mb-8">
+          <p className="text-sm font-medium text-muted-foreground uppercase tracking-widest mb-8 relative inline-block">
             Featured Project
+            <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-accent" />
           </p>
           {projects.map((project) => (
             <Card 
@@ -139,10 +142,11 @@ export const Projects = () => {
 
         {/* Writing Section */}
         <div>
-          <p className="text-sm font-medium text-muted-foreground uppercase tracking-widest mb-8">
+          <p className="text-sm font-medium text-muted-foreground uppercase tracking-widest mb-8 relative inline-block">
             Technical/Philosophical Writing
+            <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-accent" />
           </p>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {posts.map((post) => (
               <Link key={post.title} href={post.link} className="group">
                 <Card className="h-full bg-card border-border p-8 rounded-2xl shadow-sm hover:shadow-md transition-all group-hover:border-primary/20">

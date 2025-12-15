@@ -4,8 +4,9 @@ export const Contact = () => {
   return (
     <section id="contact" className="section-padding">
       <div className="container-max text-center">
-        <h2 className="text-4xl md:text-5xl font-display font-medium mb-8 tracking-tight">
+        <h2 className="text-4xl md:text-5xl font-display font-medium mb-8 tracking-tight relative inline-block">
           Contact
+          <span className="absolute -bottom-2 left-0 right-0 h-0.5 bg-accent" />
         </h2>
         <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
           Get in touch with me

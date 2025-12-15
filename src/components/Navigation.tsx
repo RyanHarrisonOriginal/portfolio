@@ -36,18 +36,33 @@ export const Navigation = () => {
     <>
       <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-6 md:px-12 py-6 flex items-center justify-between">
-          <a 
-            href="/" 
-            className="text-xl font-display font-medium tracking-tight"
-            onClick={(e) => {
-              if (isHomePage) {
-                e.preventDefault();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }
-            }}
-          >
-            RH
-          </a>
+          <div className="flex items-center gap-4 md:gap-6">
+            <a 
+              href="/" 
+              className="flex items-center gap-3 text-xl font-display font-medium tracking-tight"
+              onClick={(e) => {
+                if (isHomePage) {
+                  e.preventDefault();
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+              }}
+            >
+              <img 
+                src="/ryan-logo.png" 
+                alt="Ryan Harrison Logo" 
+                className="w-8 h-8 md:w-10 md:h-10"
+              />
+              <span>RH</span>
+            </a>
+            <div className="hidden md:flex items-center gap-4 md:gap-6 border-l border-border pl-4 md:pl-6">
+              <h1 className="text-lg md:text-xl font-display font-medium tracking-tight">
+                Clarity, <span className="text-accent">engineered</span>
+              </h1>
+              <p className="text-sm text-muted-foreground font-light italic">
+                Building tools for thinking at scale.
+              </p>
+            </div>
+          </div>
 
           <button
             onClick={() => setIsOpen(!isOpen)}
@@ -71,7 +86,7 @@ export const Navigation = () => {
               <button
                 key={item.label}
                 onClick={() => scrollToSection(item.href)}
-                className="block text-5xl md:text-7xl font-display font-medium hover:opacity-50 transition-opacity"
+                className="block text-5xl md:text-7xl font-display font-medium hover:opacity-50 transition-opacity relative group"
                 style={{ 
                   animationDelay: `${index * 100}ms`,
                   opacity: isOpen ? 1 : 0,
@@ -80,6 +95,7 @@ export const Navigation = () => {
                 }}
               >
                 {item.label}
+                <span className="absolute -bottom-2 left-0 right-0 h-0.5 bg-accent origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
               </button>
             ))}
           </div>
