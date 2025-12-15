@@ -52,30 +52,6 @@ export const Projects = () => {
           <h2 className="text-4xl md:text-5xl font-display">WORK</h2>
         </div>
 
-        {/* Two Column Layout */}
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 mb-24">
-          <div className="space-y-6">
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              End-to-end solutions from architecture to deployment. Working across AI, 
-              front-end, back-end, data orchestration, and infrastructure.
-            </p>
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              Focused on clean design, clear thinking, and functional systems that 
-              scale with your business needs.
-            </p>
-          </div>
-
-          <div className="space-y-6">
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              The systems I build are designed for humans first. Every tool, pipeline, 
-              and interface reduces friction and cognitive overhead.
-            </p>
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              Not just responsible AI. Responsible authority. That starts with 
-              intentional architecture.
-            </p>
-          </div>
-        </div>
 
         {/* Featured Project */}
         <div className="mb-24">
