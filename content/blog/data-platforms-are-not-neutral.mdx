@@ -1,0 +1,73 @@
+---
+title: "Data Platforms Are Not Neutral"
+subtitle: "Ontology, Memory, and the Work We Pretend Is Technical"
+slug: "data-platforms-are-not-neutral"
+date: "2025-12-14"
+---
+
+## Positioning
+
+From time to time, someone will ask me, "Ryan, what exactly do you do?" When I say I work in data and analytics, the response is almost always the same: "Ah—like IT."
+
+That answer has always bothered me, because it reveals a deeper misunderstanding of what data and analytics actually are.
+
+A modern data and analytics platform is neither an IT function nor a purely business function. It lives upstream—and at the center—of both. It shapes what an organization sees and remembers, how it reasons about itself and the world it operates in, and which versions of reality ultimately become action.
+
+The real work isn't dashboards or pipelines in isolation. It's developing a clear understanding of the domain, the systems that generate data, and the conceptual framework imposed on top of that data to make it meaningful. Tools matter. Infrastructure matters. But without a coherent ontology, they simply automate confusion. A modern data stack in the hands of a team that doesn't understand the world in which it operates is a powerful instrument applied blindly.
+
+This isn't a how-to guide or a catalog of technologies. It's a framework for thinking about data and analytics platforms as systems of meaning first, and systems of computation second.
+
+## Thesis
+
+Data and analytics platforms are ontology-encoding engines, not neutral infrastructure. They embody how an organization understands its domain, what it chooses to remember, and which versions of reality it turns into action. Reports, dashboards, and tools are not the platform itself—they are artifacts that emerge only after this encoding has been done.
+
+## Mental Model
+
+To reason about data platforms with any real depth, we first need to define the world they operate in.
+
+A data platform has one job: to translate operational reality into analytical truth across time.
+
+Operational systems—ERP systems in particular—are optimized for atomic actions executed through a user interface. Their data models are designed to facilitate specific workflows and to ensure the speed, consistency, and reliability of transactions. They are built to do, not to explain.
+
+This creates a fundamental disconnect between the mental model of the software architect and that of the data architect. The software architect reasons about entities in terms of actions, methods, and constraints required to execute a task. The data architect must reason about those same entities in terms of meaning, history, and relationships across the broader domain.
+
+Where operational systems narrow their focus to support immediate action, analytical systems require a wider lens. The goal is not to optimize a single workflow, but to understand the full scope, evolution, and implications of the entities that define the business.
+
+### ELT (Extract Load and Transform) is not about pipelines and DAGs, it's a sequence of decisions and commitments
+
+We can think of ELT as mapping to a different, more honest sequence: Interpretation, Decision, and Declaration.
+
+Extraction is not the act of pulling data—it is the interpretation of source intent. Load is not about movement—it is the decision of what is worth remembering. Transformation is not reshaping tables—it is the declaration of meaning.
+
+Source system interpretation is critical. You cannot understand where you need to go if you do not understand where you are starting from. Every source system encodes the decisions of a development team you may or may not have access to. Those decisions are embedded in table structures, constraints, and normalization patterns, and they must be decoded before any analytical work begins.
+
+Primary keys, unique constraints, and relational boundaries are not implementation details. They are claims about identity and invariance. These claims directly shape downstream modeling decisions, whether you acknowledge them or not. Normalization techniques that optimize transactional performance often fragment meaning, and when they interfere with analytical understanding, they must be deliberately reassembled.
+
+A deeper question follows: does the source system even contain the concepts you care about? For example, does it encode a notion of contribution margin—and if so, does that definition align with how your organization understands it? When the answer is no, the responsibility shifts to the data platform to map the developer's design decisions into transformation logic that reflects the analytical truth you intend to declare.
+
+### Ontology always comes before transformation logic
+
+It is dangerously easy to jump straight into transformation logic when building analytical models for user-facing reports. That instinct almost always results in technical debt, delivery delays, or—worse—data products that appear correct but encode the wrong truth.
+
+Before writing a single line of transformation code, the intended end state must be explicit. Ontology precedes logic. You must understand what the entities in your domain mean before deciding how to compute them.
+
+This requires answering uncomfortable questions early. What does it mean to be a customer? Does an entity remain a customer if no transaction has occurred in the last six months? How do those definitions propagate into retention, churn, and lifetime value metrics? These are not reporting questions—they are ontological ones.
+
+Transformation logic does not discover answers to these questions. It merely enforces them. When assumptions are left implicit, they become embedded in code and silently shape downstream decisions. This is where analytical systems accumulate debt that is difficult to detect and expensive to unwind.
+
+## The endurance of dimensional modeling
+
+Once ontology is clearly understood, it must be solidified through accurate declaration. Dimensional modeling has endured not because it is fashionable, but because of the communicative power it provides. It offers a structure in which entities are allowed to evolve independently over time.
+
+A customer dimension may gain or shed attributes year over year, yet its usefulness remains intact as the world around it changes. We are still able to calculate average order size, retention, churn risk, and other core metrics without redefining the entire analytical surface area. Dimensional models confront the uncomfortable reality of change in a strikingly elegant way by isolating fact tables—the institutional record of events—from the shifting definitions that surround them.
+
+Many data teams instead opt for flat, wide analytical structures in the name of convenience. With modern warehouses like BigQuery and Snowflake, recomputing an entire table to reflect updated customer attributes often feels trivial. From a purely computational perspective, they are not wrong.
+
+What is frequently overlooked is the human cost of this approach. When meaning is centralized into a single wide table, a change in how the organization understands a customer now requires updates across dozens of downstream models, metrics, and reports. Analytics engineers are forced to touch ten places to make one conceptual change.
+
+Flat and wide is not an optimal solution. It is a coping mechanism. At best, it trades short-term convenience for long-term fragility. At worst, it is a signal that the underlying ontology was never made explicit in the first place.
+
+Longevity is the name of the game in data and analytics. The enduring question for any engineer is simple: how do I make this sustainable—how do I build something that remains useful over time?
+
+The answer does not begin with infrastructure, coding practices, or polished dashboards. It begins with a thoughtful reflection on the identity of the business—its attributes, its incentives, and its ambitions. Only after that work is done does it make sense to fill in the blanks with metal and code.
+
