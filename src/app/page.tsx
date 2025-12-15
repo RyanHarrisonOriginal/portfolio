@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Navigation } from "@/components/Navigation";
 import { Hero } from "@/components/Hero";
 import { Projects } from "@/components/Projects";
@@ -9,7 +10,9 @@ import { HashHandler } from "@/components/HashHandler";
 const Index = async () => {
   return (
     <div className="min-h-screen bg-background">
-      <HashHandler />
+      <Suspense fallback={null}>
+        <HashHandler />
+      </Suspense>
       <Navigation />
       <Hero />
       <Projects />
