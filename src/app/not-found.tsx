@@ -1,22 +1,14 @@
-import Link from "next/link";
+import { TextLink } from "@/components/spec/TextLink";
+import { frame } from "@/lib/site";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <main className="section-padding container-max text-center">
-        <h1 className="text-4xl font-display mb-4">404</h1>
-        <p className="text-lg text-muted-foreground mb-8">
-          Page not found
-        </p>
-        <Link 
-          href="/" 
-          className="text-accent hover:underline font-medium"
-        >
-          Return home
-        </Link>
-      </main>
+    <div className={`${frame} py-24`}>
+      <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted">§ 404</p>
+      <h1 className="mt-4 font-serif text-5xl tracking-tight text-ink">This sheet is not in the set.</h1>
+      <p className="mt-8">
+        <TextLink href="/">Return to the index</TextLink>
+      </p>
     </div>
   );
 }
-
-

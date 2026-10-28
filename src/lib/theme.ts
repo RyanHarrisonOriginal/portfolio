@@ -1,0 +1,2 @@
+/** Runs before paint. Sets .light or .dark from storage, then the OS. */
+export const themeBootScript = `(function(){try{var stored=localStorage.getItem("theme");var root=document.documentElement;var theme=stored==="light"||stored==="dark"?stored:(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");root.classList.remove("light","dark");root.classList.add(theme);root.style.colorScheme=theme;}catch(e){}})();`;

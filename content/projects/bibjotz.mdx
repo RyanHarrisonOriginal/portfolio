@@ -1,0 +1,49 @@
+---
+name: BibJotz
+slug: bibjotz
+graphLabel: BibJotz
+status: in-development
+order: 2
+role: Engineer
+timeline: "—"
+purpose: Versioned, guide-driven reflection and Bible study, kept attached to the passage it came from.
+invariant: A reflection stays attached to the passage and the guide version that produced it.
+stack:
+  - Next.js
+  - PostgreSQL
+  - Tailwind CSS
+links:
+  - label: Backend API
+    href: https://github.com/RyanHarrisonOriginal/BibJotz-Backend
+  - label: Frontend
+    href: https://github.com/RyanHarrisonOriginal/BibJotz-Frontend
+  - label: Bible API
+    href: https://github.com/RyanHarrisonOriginal/BibleApi
+draft: true
+problem: |
+  Free-form notes feel flexible and then fall apart. A thought about a passage loses the passage. A guide gets revised and the old reflections pretend they were written against the new one. Study becomes a pile instead of a record.
+
+  BibJotz is built around guides, drafts, and references so study can change without becoming disposable.
+invariantBody: |
+  A reflection is not a loose note that happens to mention a verse. It points at a passage, and it points at the version of the guide that was in force when it was written.
+
+  When the guide changes, earlier reflections remain true to the guide they were made with. They are not silently rewritten to match the latest wording.
+contracts: |
+  - A reflection references a passage, not a pasted copy that can drift.
+  - A guide is versioned. A reflection names the version it was written against.
+  - Editing a draft does not erase the previous draft.
+  - The public reading surface and the private study surface do not share a writable record by accident.
+architecture: |
+  The web app, the study API, and the Bible API are separate repositories. The drawing should show which one owns identity, which one owns text, and which one is only a client.
+
+  Stack listed on this sheet is taken from the current build: Next.js, PostgreSQL, and Tailwind CSS. Treat anything more specific as not yet written.
+failureModes: |
+  - A guide edit that rewrites history instead of cutting a new version.
+  - A reflection that stores passage text inline, then disagrees with the source.
+  - Two drafts of the same study with no way to say which one is current.
+  - A reference that resolves for the author and fails for the next reader.
+outcome: |
+  BibJotz is in development. There is no launch claim, no user count, and no testimonial on this sheet.
+change: |
+  The versioning rule is the part to pressure first. If a guide can still change under an existing reflection, the invariant is prose and not a system.
+---

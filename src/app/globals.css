@@ -1,86 +1,125 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap');
-
 @import "tailwindcss";
 
-@theme {
-  --color-background: hsl(40 20% 98%);
-  --color-foreground: hsl(220 15% 15%);
-  --color-card: hsl(0 0% 100%);
-  --color-card-foreground: hsl(220 15% 15%);
-  --color-popover: hsl(0 0% 100%);
-  --color-popover-foreground: hsl(220 15% 15%);
-  --color-primary: hsl(220 15% 15%);
-  --color-primary-foreground: hsl(40 20% 98%);
-  --color-secondary: hsl(220 10% 96%);
-  --color-secondary-foreground: hsl(220 15% 15%);
-  --color-muted: hsl(220 10% 92%);
-  --color-muted-foreground: hsl(220 10% 45%);
-  --color-accent: hsl(43 74% 49%);
-  --color-accent-foreground: hsl(220 15% 15%);
-  --color-destructive: hsl(0 72% 51%);
-  --color-destructive-foreground: hsl(40 20% 98%);
-  --color-border: hsl(220 10% 88%);
-  --color-input: hsl(220 10% 88%);
-  --color-ring: hsl(43 74% 49%);
-  --radius: 1rem;
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-playfair), ui-serif, Georgia, serif;
+/* Class-based dark mode. The boot script sets .light or .dark before paint. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+  Living Spec tokens.
+  One source of truth. Utilities read these through @theme inline so a theme
+  switch updates every color without a second palette in components.
+*/
+:root {
+  --paper: #f4f1ea;
+  --ink: #1a1a1a;
+  --muted: #3f3b36;
+  --accent: #d9480f;
+  --rule: #8a8278;
+  --line: #5c564e;
+  --mark: #5c564e;
+  --grid-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='8' height='8'><path d='M8 0H0V8' fill='none' stroke='%231A1A1A' stroke-opacity='0.055' stroke-width='1'/></svg>");
+  color-scheme: light;
 }
 
-* {
-  border-color: var(--color-border);
+:root.dark {
+  --paper: #0e1a2b;
+  --ink: #e8e4da;
+  --muted: #c8c2b6;
+  --accent: #d9480f;
+  --rule: #5c6b82;
+  --line: #b7c0ce;
+  --mark: #b7c0ce;
+  --grid-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='8' height='8'><path d='M8 0H0V8' fill='none' stroke='%23E8E4DA' stroke-opacity='0.045' stroke-width='1'/></svg>");
+  color-scheme: dark;
 }
 
-body {
-  background-color: var(--color-background);
-  color: var(--color-foreground);
-  font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-display);
-  font-weight: 500;
-  letter-spacing: -0.025em;
-}
-
-.section-padding {
-  padding-top: 6rem;
-  padding-bottom: 6rem;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-}
-
-@media (min-width: 768px) {
-  .section-padding {
-    padding-top: 8rem;
-    padding-bottom: 8rem;
-    padding-left: 3rem;
-    padding-right: 3rem;
+/* No-JS: follow the OS without a class on <html>. */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light):not(.dark) {
+    --paper: #0e1a2b;
+    --ink: #e8e4da;
+    --muted: #c8c2b6;
+    --accent: #d9480f;
+    --rule: #5c6b82;
+    --line: #b7c0ce;
+    --mark: #b7c0ce;
+    --grid-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='8' height='8'><path d='M8 0H0V8' fill='none' stroke='%23E8E4DA' stroke-opacity='0.045' stroke-width='1'/></svg>");
+    color-scheme: dark;
   }
 }
 
-@media (min-width: 1024px) {
-  .section-padding {
-    padding-left: 5rem;
-    padding-right: 5rem;
+@theme inline {
+  --font-serif: var(--font-newsreader), "Iowan Old Style", Palatino, Georgia, serif;
+  --font-sans: var(--font-inter-tight), "Avenir Next", "Segoe UI", sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, "Cascadia Mono", monospace;
+
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-rule: var(--rule);
+  --color-line: var(--line);
+  --color-mark: var(--mark);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--paper);
+    background-image: var(--grid-image);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 17px;
+    line-height: 1.6;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  :focus {
+    outline: none;
+  }
+
+  :focus-visible {
+    outline: 1px solid var(--accent);
+    outline-offset: 3px;
   }
 }
 
-.container-max {
-  max-width: 72rem;
-  margin-left: auto;
-  margin-right: auto;
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
 }
 
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Custom selection */
-::selection {
-  background-color: var(--color-primary);
-  color: var(--color-primary-foreground);
+@media (scripting: none) {
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }

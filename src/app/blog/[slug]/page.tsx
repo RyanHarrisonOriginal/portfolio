@@ -1,91 +1,72 @@
-import { Navigation } from "@/components/Navigation";
+import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { MDXRemote } from "next-mdx-remote/rsc";
+import { proseComponents } from "@/components/mdx/prose";
+import { frame } from "@/lib/site";
+import { formatSheetDate } from "@/lib/writing";
 
-interface BlogPost {
-  slug: string;
-  title: string;
-  subtitle?: string;
-  date: string;
-  content: string;
-}
+type Params = { slug: string };
 
-async function getPost(slug: string): Promise<BlogPost | null> {
-  const contentDir = path.join(process.cwd(), "content", "blog");
-  const filePath = path.join(contentDir, `${slug}.mdx`);
-
-  if (!fs.existsSync(filePath)) {
-    return null;
-  }
-
-  const fileContents = fs.readFileSync(filePath, "utf8");
-  const { data, content } = matter(fileContents);
-
+async function getPost(slug: string) {
+  const filePath = path.join(process.cwd(), "content", "blog", `${slug}.mdx`);
+  if (!fs.existsSync(filePath)) return null;
+  const raw = fs.readFileSync(filePath, "utf8");
+  const { data, content } = matter(raw);
+  const words = content.trim().split(/\s+/).length;
   return {
-    slug,
-    title: data.title || "",
-    subtitle: data.subtitle,
-    date: data.date || "",
+    title: String(data.title ?? "Untitled"),
+    subtitle: typeof data.subtitle === "string" ? data.subtitle : "",
+    date: typeof data.date === "string" ? data.date : "",
+    minutes: Math.max(1, Math.round(words / 230)),
     content,
   };
 }
 
-const mdxComponents = {
-  h1: ({ children }: { children: React.ReactNode }) => (
-    <h1 className="text-5xl font-display mb-8 mt-12 first:mt-0">{children}</h1>
-  ),
-  h2: ({ children }: { children: React.ReactNode }) => (
-    <h2 className="text-3xl font-display mt-12 mb-6">{children}</h2>
-  ),
-  h3: ({ children }: { children: React.ReactNode }) => (
-    <h3 className="text-2xl font-display mt-10 mb-6">{children}</h3>
-  ),
-  p: ({ children }: { children: React.ReactNode }) => (
-    <p className="text-lg text-foreground mb-6 leading-relaxed">{children}</p>
-  ),
-};
-
-export default async function BlogPostPage({
+export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
-}) {
+  params: Promise<Params>;
+}): Promise<Metadata> {
   const { slug } = await params;
   const post = await getPost(slug);
-
-  if (!post) {
-    notFound();
-  }
-
-  return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
-      <main className="section-padding container-max pt-24">
-        <article className="max-w-none">
-          <header className="mb-12">
-            <h1 className="text-5xl font-display mb-4">{post.title}</h1>
-            {post.subtitle && (
-              <p className="text-xl text-muted-foreground mb-4">{post.subtitle}</p>
-            )}
-            {post.date && (
-              <time className="text-sm text-muted-foreground">
-                {new Date(post.date).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </time>
-            )}
-          </header>
-          <div className="prose prose-lg max-w-none">
-            <MDXRemote source={post.content} components={mdxComponents} />
-          </div>
-        </article>
-      </main>
-    </div>
-  );
+  if (!post) return { title: "Not found" };
+  return { title: post.title, description: post.subtitle || undefined };
 }
 
+export default async function BlogPostPage({ params }: { params: Promise<Params> }) {
+  const { slug } = await params;
+  const post = await getPost(slug);
+  if (!post) notFound();
+
+  return (
+    <article className={`${frame} py-12 md:py-16`}>
+      <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted">
+        <Link href="/#writing" className="border-b border-transparent hover:border-accent">
+          Writing
+        </Link>
+        <span className="mx-2 text-rule">/</span>
+        Essay
+      </p>
+      <header className="mt-6 max-w-[40rem] border-b border-rule pb-8">
+        <h1 className="font-serif text-4xl leading-[1.05] tracking-[-0.03em] text-ink md:text-6xl">
+          {post.title}
+        </h1>
+        {post.subtitle && (
+          <p className="mt-4 font-serif text-xl leading-snug text-ink md:text-2xl">{post.subtitle}</p>
+        )}
+        <p className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-muted">
+          {post.date ? formatSheetDate(post.date) : "—"}
+          <span className="mx-2 text-rule">/</span>
+          {post.minutes} min
+        </p>
+      </header>
+      <div className="mt-10 max-w-[65ch]">
+        <MDXRemote source={post.content} components={proseComponents} />
+      </div>
+    </article>
+  );
+}

@@ -1,0 +1,52 @@
+---
+name: Spydr
+slug: spydr
+graphLabel: Spydr
+status: live
+order: 1
+role: Engineer
+timeline: "—"
+purpose: Project and task management for work that has to keep its shape.
+invariant: A unit of work has one state, and that state changes only through an explicit transition.
+stack:
+  - "—"
+links:
+  - label: spydr-app.cloud
+    href: https://spydr-app.cloud
+draft: true
+problem: |
+  Work tracking tools are good at collecting tasks and poor at keeping the meaning of those tasks stable. State gets edited in place. History turns into a comment thread. Two people can believe a task is in two different states, and both of them can be looking at the product.
+
+  Spydr is a project and task management application for that gap. It is live at spydr-app.cloud. The clauses on this sheet are working copy.
+invariantBody: |
+  The one-line form is the rule the rest of the system is answerable to. A task does not have a status field that anyone may patch. It has a state, and a transition is the only way that state moves.
+
+  Prior state stays addressable. If someone needs to know what was true on Tuesday, the record can say so without reconstructing it from chatter.
+
+  This wording is a draft of the invariant. Replace it with the rule the running system actually enforces.
+contracts: |
+  - A task belongs to one project.
+  - A transition names the state it leaves and the state it enters.
+  - A recorded transition is not rewritten. A correction is a new transition.
+  - Repeating the same transition does not create a second copy of it.
+  - Further contracts belong here once they are taken from the real schema, not invented beside it.
+architecture: |
+  The drawing is intentionally empty. It should show the clients, the API, and the store that owns transitions, with the direction of authority marked.
+
+  Until that sheet exists, the architecture is three commitments. The interface does not invent state. The API accepts transitions rather than silent patches. The record can be replayed.
+failureModes: |
+  - Two transitions accepted for the same task with no order between them.
+  - A client retry that appends a second copy of a transition that already landed.
+  - A status field that can still be patched directly, beside the transition log.
+  - A history so noisy that the current state can no longer be read from it.
+
+  Production incidents are not listed here. If they belong on this sheet, they will be written from the record, not from memory dressed up as fact.
+outcome: |
+  Spydr is live at spydr-app.cloud.
+
+  Usage counts, customer names, and testimonials are not on this sheet. They will be added only when they are real, and only if they help someone understand the system.
+change: |
+  Written once the system has been held long enough to know what the next revision actually is.
+
+  The empty fields above — stack, timeline, and this clause — are the ones to replace first.
+---
